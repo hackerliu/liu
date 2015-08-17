@@ -1,16 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.root.OneKeyRoot"
+          package="com.xmpp.Chat"
           android:versionCode="1"
           android:versionName="1.0">
-    <uses-sdk android:minSdkVersion="20"/>
-    <application android:label="@string/app_name" android:icon="@drawable/ic_launcher">
-        <activity android:name="MainActivity"
-                  android:label="@string/app_name">
+    <uses-sdk android:minSdkVersion="10"/>
+
+    <application android:label="@string/app_name"
+                 android:icon="@drawable/ic_launcher"
+                 android:name=".activity.MyApplication">
+
+        <activity android:name=".activity.WelcomeActivity"
+                  android:label="@string/app_name"
+                  android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity android:name=".activity.MainActivity"
+                  android:theme="@android:style/Theme.NoTitleBar"/>
+        <activity android:name=".activity.ChatActivity"
+                  android:theme="@android:style/Theme.NoTitleBar"/>
+        <activity android:name=".activity.FriendActivity"
+                  android:theme="@android:style/Theme.NoTitleBar"/>
+        <activity android:name=".activity.EventsActivity"
+                  android:theme="@android:style/Theme.NoTitleBar"/>
+        <activity android:name=".activity.LoginActivity"
+                  android:theme="@android:style/Theme.NoTitleBar"/>
+        <activity android:name=".activity.RegisterActivity"
+                  android:theme="@android:style/Theme.NoTitleBar"/>
+        <activity android:name=".activity.RegisterResultActivity"
+                  android:theme="@android:style/Theme.NoTitleBar"/>
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 </manifest>
