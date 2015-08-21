@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/register3">
 
         <com.xmpp.Chat.view.TitleBarView
                 android:id="@+id/title_bar"
@@ -55,12 +57,14 @@
 
                 <RadioButton android:layout_width="wrap_content"
                              android:layout_height="wrap_content"
+                             android:textColor="@color/defaultTextColor"
                              android:text="@string/male"
                              android:layout_marginLeft="20dp"
                              android:checked="true"/>
 
                 <RadioButton android:layout_width="wrap_content"
                              android:layout_height="wrap_content"
+                             android:textColor="@color/defaultTextColor"
                              android:text="@string/female"
                              android:layout_marginLeft="50dp"/>
 
