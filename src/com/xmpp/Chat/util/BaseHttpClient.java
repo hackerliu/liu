@@ -1,7 +1,5 @@
 package com.xmpp.Chat.util;
 
-import android.content.res.Configuration;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -18,9 +16,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -29,7 +25,7 @@ import java.util.Set;
  * Created by think on 2015/8/22.
  */
 public class BaseHttpClient {
-    public static String post(String url,Map<String,String> params){
+    public static String post(String url, Map<String, String> params) {
         DefaultHttpClient httpClient = new DefaultHttpClient();
         String body = null;
 
@@ -48,6 +44,7 @@ public class BaseHttpClient {
 
         return body;
     }
+
     public static String post(String url, JSONObject params) {
         DefaultHttpClient httpClient = new DefaultHttpClient();
         String body = null;
@@ -67,10 +64,11 @@ public class BaseHttpClient {
         } catch (Exception e) {
             httpClient.getConnectionManager().shutdown();
             e.printStackTrace();
-            return"error";
+            return "error";
         }
         return body;
     }
+
     private static String invoke(DefaultHttpClient httpclient,
                                  HttpUriRequest httpost) {
 
@@ -110,13 +108,14 @@ public class BaseHttpClient {
         }
         return response;
     }
-    private static HttpPost postForm(String url, Map<String, String> params){
+
+    private static HttpPost postForm(String url, Map<String, String> params) {
 
         HttpPost httPost = new HttpPost(url);
         List<NameValuePair> nvps = new ArrayList<NameValuePair>();
 
         Set<String> keySet = params.keySet();
-        for(String key : keySet) {
+        for (String key : keySet) {
             nvps.add(new BasicNameValuePair(key, params.get(key)));
         }
 

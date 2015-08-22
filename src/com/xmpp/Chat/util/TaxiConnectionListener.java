@@ -7,7 +7,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Á¬½Ó¼àÌıÀà
+ * è¿æ¥ç›‘å¬ç±»
  *
  * @author Administrator
  *
@@ -20,23 +20,23 @@ public class TaxiConnectionListener implements ConnectionListener {
 
     @Override
     public void connectionClosed() {
-        Log.i("TaxiConnectionListener", "ßB½ÓêPé]");
-        // êPé]ßB½Ó
+        Log.i("TaxiConnectionListener", "é€£æ¥é—œé–‰");
+        // é—œé–‰é€£æ¥
         XmppConnection.getInstance().closeConnection();
-        // ÖØÁ¬·şÎñÆ÷
+        // é‡è¿æœåŠ¡å™¨
         tExit = new Timer();
         tExit.schedule(new timetask(), logintime);
     }
 
     @Override
     public void connectionClosedOnError(Exception e) {
-        Log.i("TaxiConnectionListener", "ßB½ÓêPé]®³£");
-        // ÅĞ”àé¤Ì–ÒÑ±»µÇä›
+        Log.i("TaxiConnectionListener", "é€£æ¥é—œé–‰ç•°å¸¸");
+        // åˆ¤æ–·ç‚ºå¸³è™Ÿå·²è¢«ç™»éŒ„
         boolean error = e.getMessage().equals("stream:error (conflict)");
         if (!error) {
-            // êPé]ßB½Ó
+            // é—œé–‰é€£æ¥
             XmppConnection.getInstance().closeConnection();
-            // ÖØÁ¬·şÎñÆ÷
+            // é‡è¿æœåŠ¡å™¨
             tExit = new Timer();
             tExit.schedule(new timetask(), logintime);
         }
@@ -48,12 +48,12 @@ public class TaxiConnectionListener implements ConnectionListener {
             username = "";
             password = "";
             if (username != null && password != null) {
-                Log.i("TaxiConnectionListener", "‡LÔ‡µÇä›");
-                // Á¬½Ó·şÎñÆ÷
+                Log.i("TaxiConnectionListener", "å˜—è©¦ç™»éŒ„");
+                // è¿æ¥æœåŠ¡å™¨
                 if (XmppConnection.getInstance().login(username, password)) {
-                    Log.i("TaxiConnectionListener", "µÇä›³É¹¦");
+                    Log.i("TaxiConnectionListener", "ç™»éŒ„æˆåŠŸ");
                 } else {
-                    Log.i("TaxiConnectionListener", "ÖØĞÂµÇä›");
+                    Log.i("TaxiConnectionListener", "é‡æ–°ç™»éŒ„");
                     tExit.schedule(new timetask(), logintime);
                 }
             }

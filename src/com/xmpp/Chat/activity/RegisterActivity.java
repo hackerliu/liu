@@ -11,18 +11,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
-
 import com.xmpp.Chat.R;
 import com.xmpp.Chat.util.BaseHttpClient;
 import com.xmpp.Chat.util.Constants;
 import com.xmpp.Chat.util.LogHelper;
 import com.xmpp.Chat.util.XmppConnection;
 import com.xmpp.Chat.view.TitleBarView;
-
 import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class RegisterActivity extends Activity {
 
@@ -97,19 +92,20 @@ public class RegisterActivity extends Activity {
                     @Override
                     public void run() {
                         try{
-                            Map map_regsiter = new HashMap();
-                            map_regsiter.put("nickName","丁健君12");
-                            map_regsiter.put("sex","男");
-                            map_regsiter.put("password","123456");
+                            //连接后台服务器
                             JSONObject json_register=new JSONObject();
                             json_register.put("nickName","丁健君12");
                             json_register.put("sex","男");
                             json_register.put("password","123456");
                             String resultBody = BaseHttpClient.post(Constants.REGISTERHOST,json_register);
                             JSONObject resultObject = new JSONObject(resultBody);
-                            //连接后台服务器
+
                             String userID = null;
-                            if (userID != null) {
+                            if(resultObject.getString("message").equals("success")){
+                                userID=resultObject.getString("userNum");
+                            }
+
+                            if (userID != null && !userID.trim().equals("")) {
                                 String result = XmppConnection.getInstance().regist(userID, psw);
                                 if (result == "1") {
                                     Message msg = handler.obtainMessage(SUCCESS);
@@ -124,7 +120,6 @@ public class RegisterActivity extends Activity {
                             }
                         }catch (Exception e){
                             LogHelper.getInstance().writeLog(RegisterActivity.class,e.getMessage());
-
                         }
 
                     }

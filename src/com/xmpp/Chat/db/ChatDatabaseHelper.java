@@ -68,7 +68,6 @@ public class ChatDatabaseHelper {
             }catch (Exception e){
                 LogHelper.getInstance().writeLog(ChatDatabaseHelper.class,"创建表失败");
                 Log.e("DATATABLE_ERROR","创建表失败:"+e.getMessage());
-                e.printStackTrace();
             }finally {
                 closeDB(db,dbOpenHelper);
             }
