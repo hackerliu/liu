@@ -84,9 +84,9 @@ public class RegisterActivity extends Activity{
                     return;
                 }
 
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
+                                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
 
                         //连接后台服务器
                         String userID = null;
