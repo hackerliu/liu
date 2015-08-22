@@ -11,32 +11,41 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
+
 import com.xmpp.Chat.R;
+import com.xmpp.Chat.util.BaseHttpClient;
+import com.xmpp.Chat.util.Constants;
+import com.xmpp.Chat.util.LogHelper;
 import com.xmpp.Chat.util.XmppConnection;
 import com.xmpp.Chat.view.TitleBarView;
 
-public class RegisterActivity extends Activity{
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class RegisterActivity extends Activity {
 
     private EditText name_et;
     private EditText psw_et;
     private RadioButton sex_rb;
     private Context mContext;
 
-    public static final int SUCCESS=1;
-    public static final int FAILURE=0;
+    public static final int SUCCESS = 1;
+    public static final int FAILURE = 0;
 
-    private Handler handler=new Handler(){
+    private Handler handler = new Handler() {
 
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case SUCCESS:
-                    Intent intent=new Intent(mContext,RegisterResultActivity.class);
-                    intent.putExtra("userID",msg.obj.toString());
+                    Intent intent = new Intent(mContext, RegisterResultActivity.class);
+                    intent.putExtra("userID", msg.obj.toString());
                     startActivity(intent);
                     finish();
                     break;
-                case  FAILURE:
+                case FAILURE:
                     Toast.makeText(mContext, getString(R.string.reg_fail), Toast.LENGTH_LONG).show();
                     break;
             }
@@ -49,16 +58,16 @@ public class RegisterActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
 
-        Button btn_complete=(Button) findViewById(R.id.register_complete);
+        Button btn_complete = (Button) findViewById(R.id.register_complete);
 
-        mContext=this;
+        mContext = this;
 
-        name_et= (EditText) findViewById(R.id.name);
-        psw_et= (EditText) findViewById(R.id.password);
-        sex_rb= (RadioButton) findViewById(R.id.maleRB);
+        name_et = (EditText) findViewById(R.id.name);
+        psw_et = (EditText) findViewById(R.id.password);
+        sex_rb = (RadioButton) findViewById(R.id.maleRB);
 
-        TitleBarView mTitleBarView=(TitleBarView) findViewById(R.id.title_bar);
-        mTitleBarView.setCommonTitle(View.VISIBLE, View.VISIBLE,View.GONE, View.GONE);
+        TitleBarView mTitleBarView = (TitleBarView) findViewById(R.id.title_bar);
+        mTitleBarView.setCommonTitle(View.VISIBLE, View.VISIBLE, View.GONE, View.GONE);
         mTitleBarView.setTitleText(R.string.title_register_info);
         mTitleBarView.setBtnLeft(R.drawable.boss_unipay_icon_back, R.string.back);
         mTitleBarView.setBtnLeftOnclickListener(new View.OnClickListener() {
@@ -74,35 +83,50 @@ public class RegisterActivity extends Activity{
                 final String account = name_et.getText().toString().trim();
                 final String psw = psw_et.getText().toString().trim();
 
-                final String sex= sex_rb.isChecked() ? "男" : "女";
-                if(account.equals("")){
-                    Toast.makeText(mContext,"please input your nickname",Toast.LENGTH_LONG).show();
+                final String sex = sex_rb.isChecked() ? "男" : "女";
+                if (account.equals("")) {
+                    Toast.makeText(mContext, "please input your nickname", Toast.LENGTH_LONG).show();
                     return;
                 }
-                if(psw.equals("")){
-                    Toast.makeText(mContext,"please input your password",Toast.LENGTH_LONG).show();
+                if (psw.equals("")) {
+                    Toast.makeText(mContext, "please input your password", Toast.LENGTH_LONG).show();
                     return;
                 }
 
-                                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-
-                        //连接后台服务器
-                        String userID = null;
-                        if(userID != null){
-                            String result= XmppConnection.getInstance().regist(userID,psw);
-                            if(result=="1"){
-                                Message msg=handler.obtainMessage(SUCCESS);
-                                msg.what=SUCCESS;
-                                msg.obj=userID;
-                                handler.sendMessage(msg);
-                            }else {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try{
+                            Map map_regsiter = new HashMap();
+                            map_regsiter.put("nickName","丁健君12");
+                            map_regsiter.put("sex","男");
+                            map_regsiter.put("password","123456");
+                            JSONObject json_register=new JSONObject();
+                            json_register.put("nickName","丁健君12");
+                            json_register.put("sex","男");
+                            json_register.put("password","123456");
+                            String resultBody = BaseHttpClient.post(Constants.REGISTERHOST,json_register);
+                            JSONObject resultObject = new JSONObject(resultBody);
+                            //连接后台服务器
+                            String userID = null;
+                            if (userID != null) {
+                                String result = XmppConnection.getInstance().regist(userID, psw);
+                                if (result == "1") {
+                                    Message msg = handler.obtainMessage(SUCCESS);
+                                    msg.what = SUCCESS;
+                                    msg.obj = userID;
+                                    handler.sendMessage(msg);
+                                } else {
+                                    handler.sendEmptyMessage(0);
+                                }
+                            } else {
                                 handler.sendEmptyMessage(0);
                             }
-                        }else{
-                            handler.sendEmptyMessage(0);
+                        }catch (Exception e){
+                            LogHelper.getInstance().writeLog(RegisterActivity.class,e.getMessage());
+
                         }
+
                     }
                 }).start();
             }
