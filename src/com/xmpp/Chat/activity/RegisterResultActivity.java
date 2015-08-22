@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import com.xmpp.Chat.R;
 import com.xmpp.Chat.view.TitleBarView;
 
@@ -14,6 +15,11 @@ public class RegisterResultActivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_result);
+
+        Intent intent=getIntent();
+        String userID = intent.getStringExtra("userID");
+        TextView id_tv= (TextView) findViewById(R.id.chatID);
+        id_tv.setText(userID);
 
         TitleBarView mTitleBarView=(TitleBarView) findViewById(R.id.title_bar);
         Button complete=(Button) findViewById(R.id.register_success);

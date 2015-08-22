@@ -7,41 +7,38 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 
-/**
- * Created by think on 2015/8/20.
- */
 public class ImgTools {
 
-    public Bitmap toRoundBitmap(Bitmap bitmap) {
-        //Ô²ĞÎÍ¼Æ¬¿í¸ß
+    public static Bitmap toRoundBitmap(Bitmap bitmap) {
+        //åœ†å½¢å›¾ç‰‡å®½é«˜
         int width = bitmap.getWidth();
         int height = bitmap.getHeight();
-        //Õı·½ĞÎµÄ±ß³¤
+        //æ­£æ–¹å½¢çš„è¾¹é•¿
         int r = 0;
-        //È¡×î¶Ì±ß×ö±ß³¤
+        //å–æœ€çŸ­è¾¹åšè¾¹é•¿
         if(width > height) {
             r = height;
         } else {
             r = width;
         }
-        //¹¹½¨Ò»¸öbitmap
+        //æ„å»ºä¸€ä¸ªbitmap
         Bitmap backgroundBmp = Bitmap.createBitmap(width,
                 height, Bitmap.Config.ARGB_8888);
-        //newÒ»¸öCanvas£¬ÔÚbackgroundBmpÉÏ»­Í¼
+        //newä¸€ä¸ªCanvasï¼Œåœ¨backgroundBmpä¸Šç”»å›¾
         Canvas canvas = new Canvas(backgroundBmp);
         Paint paint = new Paint();
-        //ÉèÖÃ±ßÔµ¹â»¬£¬È¥µô¾â³İ
+        //è®¾ç½®è¾¹ç¼˜å…‰æ»‘ï¼Œå»æ‰é”¯é½¿
         paint.setAntiAlias(true);
-        //¿í¸ßÏàµÈ£¬¼´Õı·½ĞÎ
+        //å®½é«˜ç›¸ç­‰ï¼Œå³æ­£æ–¹å½¢
         RectF rect = new RectF(0, 0, r, r);
-        //Í¨¹ıÖÆ¶¨µÄrect»­Ò»¸öÔ²½Ç¾ØĞÎ£¬µ±Ô²½ÇXÖá·½ÏòµÄ°ë¾¶µÈÓÚYÖá·½ÏòµÄ°ë¾¶Ê±£¬
-        //ÇÒ¶¼µÈÓÚr/2Ê±£¬»­³öÀ´µÄÔ²½Ç¾ØĞÎ¾ÍÊÇÔ²ĞÎ
+        //é€šè¿‡åˆ¶å®šçš„rectç”»ä¸€ä¸ªåœ†è§’çŸ©å½¢ï¼Œå½“åœ†è§’Xè½´æ–¹å‘çš„åŠå¾„ç­‰äºYè½´æ–¹å‘çš„åŠå¾„æ—¶ï¼Œ
+        //ä¸”éƒ½ç­‰äºr/2æ—¶ï¼Œç”»å‡ºæ¥çš„åœ†è§’çŸ©å½¢å°±æ˜¯åœ†å½¢
         canvas.drawRoundRect(rect, r/2, r/2, paint);
-        //ÉèÖÃµ±Á½¸öÍ¼ĞÎÏà½»Ê±µÄÄ£Ê½£¬SRC_INÎªÈ¡SRCÍ¼ĞÎÏà½»µÄ²¿·Ö£¬¶àÓàµÄ½«±»È¥µô
+        //è®¾ç½®å½“ä¸¤ä¸ªå›¾å½¢ç›¸äº¤æ—¶çš„æ¨¡å¼ï¼ŒSRC_INä¸ºå–SRCå›¾å½¢ç›¸äº¤çš„éƒ¨åˆ†ï¼Œå¤šä½™çš„å°†è¢«å»æ‰
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        //canvas½«bitmap»­ÔÚbackgroundBmpÉÏ
+        //canvaså°†bitmapç”»åœ¨backgroundBmpä¸Š
         canvas.drawBitmap(bitmap, null, rect, paint);
-        //·µ»ØÒÑ¾­»æ»­ºÃµÄbackgroundBmp
+        //è¿”å›å·²ç»ç»˜ç”»å¥½çš„backgroundBmp
         return backgroundBmp;
     }
 }

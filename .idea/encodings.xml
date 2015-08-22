@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding">
+  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false">
     <file url="file://$PROJECT_DIR$/src/com/xmpp/Chat/activity/MainActivity.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/com/xmpp/Chat/db/ChatDatabaseHelper.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/xmpp/Chat/util/FormatTools.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/xmpp/Chat/util/ImgTools.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/com/xmpp/Chat/util/XmppConnection.java" charset="GBK" />
   </component>
 </project>

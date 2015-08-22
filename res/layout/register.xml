@@ -53,21 +53,22 @@
         <RadioGroup android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                android:layout_margin="10dp">
+                    android:layout_margin="10dp"
+                    android:contentDescription="性别">
 
                 <RadioButton android:layout_width="wrap_content"
                              android:layout_height="wrap_content"
                              android:textColor="@color/defaultTextColor"
                              android:text="@string/male"
                              android:layout_marginLeft="20dp"
-                             android:checked="true"/>
+                             android:checked="true"
+                            android:id="@+id/maleRB"/>
 
                 <RadioButton android:layout_width="wrap_content"
                              android:layout_height="wrap_content"
                              android:textColor="@color/defaultTextColor"
                              android:text="@string/female"
                              android:layout_marginLeft="50dp"/>
-
         </RadioGroup>
 
     <Button

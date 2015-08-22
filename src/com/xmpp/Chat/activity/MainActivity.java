@@ -23,6 +23,14 @@ public class MainActivity extends TabActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+        Intent intent=getIntent();
+        userID = intent.getStringExtra("userID");
+        initView();
+        creatTable();
+        refresh();
+    }
+
+    private void initView(){
         tabHost=this.getTabHost();
         TabHost.TabSpec spec;
 
@@ -95,12 +103,15 @@ public class MainActivity extends TabActivity {
                 finish();
             }
         });
+    }
 
-        Intent intent=getIntent();
-        userID = intent.getStringExtra("userID");
+    private void creatTable(){
         ChatDatabaseHelper.getInstance().createTable(this,userID);
     }
 
+    private void refresh(){
+
+    }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode==KeyEvent.KEYCODE_MENU||keyCode==KeyEvent.KEYCODE_BACK){

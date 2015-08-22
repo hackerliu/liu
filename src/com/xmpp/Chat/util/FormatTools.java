@@ -18,13 +18,13 @@ public class FormatTools {
     private static final int ww = 480;
     private static final int hh = 800;
 
-    // ½«byte[]×ª»»³ÉInputStream
+    // å°†byte[]è½¬æ¢æˆInputStream
     public static InputStream Byte2InputStream(byte[] b) {
         ByteArrayInputStream bais = new ByteArrayInputStream(b);
         return bais;
     }
 
-    // ½«InputStream×ª»»³Ébyte[]
+    // å°†InputStreamè½¬æ¢æˆbyte[]
     public static byte[] InputStream2Bytes(InputStream is) {
         String str = "";
         byte[] readByte = new byte[1024];
@@ -40,7 +40,7 @@ public class FormatTools {
         return null;
     }
 
-    // ½«Bitmap×ª»»³ÉInputStream
+    // å°†Bitmapè½¬æ¢æˆInputStream
     public static InputStream Bitmap2InputStream(Bitmap bm) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bm.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -48,7 +48,7 @@ public class FormatTools {
         return is;
     }
 
-    // ½«Bitmap×ª»»³ÉInputStream
+    // å°†Bitmapè½¬æ¢æˆInputStream
     public static InputStream Bitmap2InputStream(Bitmap bm, int quality) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bm.compress(Bitmap.CompressFormat.PNG, quality, baos);
@@ -56,43 +56,43 @@ public class FormatTools {
         return is;
     }
 
-    // ½«InputStream×ª»»³ÉBitmap
+    // å°†InputStreamè½¬æ¢æˆBitmap
     public static Bitmap InputStream2Bitmap(InputStream is) {
         return BitmapFactory.decodeStream(is);
     }
 
-    // Drawable×ª»»³ÉInputStream
+    // Drawableè½¬æ¢æˆInputStream
     public static InputStream Drawable2InputStream(Drawable d) {
         Bitmap bitmap = drawable2Bitmap(d);
         return Bitmap2InputStream(bitmap);
     }
 
-    // InputStream×ª»»³ÉDrawable
+    // InputStreamè½¬æ¢æˆDrawable
     public static Drawable InputStream2Drawable(InputStream is) {
         Bitmap bitmap = InputStream2Bitmap(is);
         return bitmap2Drawable(bitmap);
     }
 
-    // Drawable×ª»»³Ébyte[]
+    // Drawableè½¬æ¢æˆbyte[]
     public static byte[] Drawable2Bytes(Drawable d) {
         Bitmap bitmap = drawable2Bitmap(d);
         return Bitmap2Bytes(bitmap);
     }
 
-    // byte[]×ª»»³ÉDrawable
+    // byte[]è½¬æ¢æˆDrawable
     public static Drawable Bytes2Drawable(byte[] b) {
         Bitmap bitmap = Bytes2Bitmap(b);
         return bitmap2Drawable(bitmap);
     }
 
-    // Bitmap×ª»»³Ébyte[]
+    // Bitmapè½¬æ¢æˆbyte[]
     public static byte[] Bitmap2Bytes(Bitmap bm) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bm.compress(Bitmap.CompressFormat.PNG, 100, baos);
         return baos.toByteArray();
     }
 
-    // byte[]×ª»»³ÉBitmap
+    // byte[]è½¬æ¢æˆBitmap
     public static Bitmap Bytes2Bitmap(byte[] b) {
         if (b.length != 0) {
             return BitmapFactory.decodeByteArray(b, 0, b.length);
@@ -100,7 +100,7 @@ public class FormatTools {
         return null;
     }
 
-    // Drawable×ª»»³ÉBitmap
+    // Drawableè½¬æ¢æˆBitmap
     public static Bitmap drawable2Bitmap(Drawable drawable) {
         Bitmap bitmap = Bitmap
                 .createBitmap(
@@ -115,7 +115,7 @@ public class FormatTools {
         return bitmap;
     }
 
-    // Bitmap×ª»»³ÉDrawable
+    // Bitmapè½¬æ¢æˆDrawable
     public static Drawable bitmap2Drawable(Bitmap bitmap) {
         BitmapDrawable bd = new BitmapDrawable(bitmap);
         Drawable d = (Drawable) bd;
@@ -123,7 +123,7 @@ public class FormatTools {
     }
 
     /*
-    * DateToString(Date date),Ê±¼ä×ª»»³É×Ö·û´®
+    * DateToString(Date date),æ—¶é—´è½¬æ¢æˆå­—ç¬¦ä¸²
     */
     public static String DateToString(Date date, String type) {
         SimpleDateFormat formatDate = new SimpleDateFormat(type);
@@ -137,7 +137,7 @@ public class FormatTools {
     }
 
     /*
-    * Date StringToDate(String s),×Ö·û´®×ª»»³ÉÊ±¼ä
+    * Date StringToDate(String s),å­—ç¬¦ä¸²è½¬æ¢æˆæ—¶é—´
     */
     public static java.util.Date StringToUtilDate(String s, String type) {
         SimpleDateFormat sdf = new SimpleDateFormat(type, Locale.CHINA);
@@ -170,7 +170,7 @@ public class FormatTools {
     }
 
     /**
-     * Í¼Æ¬±äÔ²½Ç
+     * å›¾ç‰‡å˜åœ†è§’
      *
      * @param bitmap
      * @param pixels

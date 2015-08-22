@@ -6,25 +6,17 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.ResourceBusyException;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
+import android.widget.*;
 import com.xmpp.Chat.R;
 import com.xmpp.Chat.util.ImgTools;
-import com.xmpp.Chat.util.XmppConnection;
+import com.xmpp.Chat.util.LogHelper;
 import com.xmpp.Chat.view.TextURLView;
-
-import java.io.Console;
-import java.io.InputStream;
 
 public class LoginActivity extends Activity{
 
@@ -39,7 +31,6 @@ public class LoginActivity extends Activity{
 
     public static final int SUCCESS=1;
     public static final int FAILURE=0;
-    public ImgTools imgtools;
 
     private Handler handler=new Handler(){
 
@@ -81,18 +72,16 @@ public class LoginActivity extends Activity{
     }
 
     private void init(){
-        imgtools=new ImgTools();
         Animation anim= AnimationUtils.loadAnimation(mContext, R.anim.login_anim);
         anim.setFillAfter(true);
         rl_user.startAnimation(anim);
         try{
             Resources res = getResources();
             Bitmap bitmap = BitmapFactory.decodeResource(res,R.drawable.lufei);
-            Bitmap bitmap1=imgtools.toRoundBitmap(bitmap);
+            Bitmap bitmap1=ImgTools.toRoundBitmap(bitmap);
             headImg.setImageBitmap(bitmap1);
         }catch(Exception e){
-            System.out.print(e.getMessage());
-
+            LogHelper.getInstance().writeLog(LoginActivity.class,e.getMessage());
         }
         mLogin.setOnClickListener(loginOnClickListener);
         register.setOnClickListener(registerOnClickListener);
@@ -109,11 +98,11 @@ public class LoginActivity extends Activity{
             final String account=account_et.getText().toString().trim();
             final String psw=psw_et.getText().toString().trim();
             if(account.equals("")){
-                Toast.makeText(LoginActivity.this,"please input yout account/ChatNumber",Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this,"please input your account/ChatNumber",Toast.LENGTH_LONG).show();
                 return;
             }
             if(psw.equals("")){
-                Toast.makeText(LoginActivity.this,"please input yout password",Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this,"please input your password",Toast.LENGTH_LONG).show();
                 return;
             }
 

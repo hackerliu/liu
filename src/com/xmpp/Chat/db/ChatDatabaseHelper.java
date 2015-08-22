@@ -32,7 +32,7 @@ public class ChatDatabaseHelper {
         String createFriendTableSQL="CREATE TABLE if not exists friend_"+userID+" (" +
                 "  userid VARCHAR(10) NOT NULL primary key," +
                 "  nickname VARCHAR(45) NOT NULL," +
-                "  headimg BLOB NOT NULL," +
+                "  headimg VARCHAR(45) NOT NULL," +
                 "  sex varchar(4) CHECK( sex IN ('男','女') ) NOT NULL DEFAULT '男'," +
                 "  birthday DATE ," +
                 "  city VARCHAR(10) ," +

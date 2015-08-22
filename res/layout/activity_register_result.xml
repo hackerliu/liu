@@ -17,7 +17,7 @@
         android:text="@string/tv_qq"
         android:layout_marginTop="80dp"/>
     
-    <TextView 
+    <TextView android:id="@+id/chatID"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:gravity="center_horizontal"
