@@ -3,7 +3,6 @@ package com.xmpp.Chat.db;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-
 import com.xmpp.Chat.util.LogHelper;
 
 public class ChatDatabaseHelper {
@@ -39,7 +38,7 @@ public class ChatDatabaseHelper {
                 "  city VARCHAR(10) ," +
                 "  realname VARCHAR(20)," +
                 "  email VARCHAR(20)," +
-                "  regtime DATETIME NOT NULL DEFAULT now())";
+                "  regtime DATETIME NOT NULL DEFAULT now)";
 
         String createUserInfoTableSQL="CREATE TABLE if not exists userinfo_"+userID+" (" +
                 "  userid VARCHAR(10) NOT NULL primary key," +
@@ -51,13 +50,14 @@ public class ChatDatabaseHelper {
                 "  city VARCHAR(10)," +
                 "  realname VARCHAR(20)," +
                 "  email VARCHAR(20)," +
-                "  regtime DATETIME NOT NULL DEFAULT now())";
+                "  regtime DATETIME NOT NULL DEFAULT now)";
 
         String createMsgInfoTableSQL="CREATE TABLE if not exists msg_"+userID+" (" +
-                "  userid VARCHAR(10) NOT NULL primary key," +
+                "  id int NOT NULL primary key AUTOINCREMENT," +
+                "  userid VARCHAR(10) NOT NULL," +
                 "  msg TEXT," +
                 "  type int(1) check(type in (0,1)) NOT NULL DEFAULT 0," +
-                "  time DATETIME NOT NULL DEFAULT now())";
+                "  time DATETIME NOT NULL DEFAULT now)";
 
         ChatDBOpenHelper dbOpenHelper=new ChatDBOpenHelper(context);
         SQLiteDatabase db=dbOpenHelper.getWritableDatabase();
@@ -68,7 +68,7 @@ public class ChatDatabaseHelper {
                 db.execSQL(createMsgInfoTableSQL);
             }catch (Exception e){
                 LogHelper.getInstance().writeLog(ChatDatabaseHelper.class,"创建表失败");
-                Log.e("DATATABLE_ERROR", "创建表失败:" + e.getMessage());
+                Log.e("DATATABLE_ERROR","创建表失败:"+e.getMessage());
             }finally {
                 closeDB(db,dbOpenHelper);
             }

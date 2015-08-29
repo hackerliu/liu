@@ -29,6 +29,9 @@
     <string name="et_name_hint">昵称</string>
     <string name="register_complete">注册</string>
     <string name="title_register_info">设置密码和昵称</string>
+    <string name="title_friend">好友列表</string>
+    <string name="title_msg">消息列表</string>
+    <string name="title_events">活动列表</string>
     <string name="tv_qq">你已获得Chat号码</string>
     <string name="tv_qq_number">525203053</string>
     <string name="tv_register_result">启用通讯录查找更多好友,直接发起QQ聊天,我已阅读并同意</string>

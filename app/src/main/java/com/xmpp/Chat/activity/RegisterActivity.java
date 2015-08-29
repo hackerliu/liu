@@ -11,14 +11,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
-
 import com.xmpp.Chat.R;
 import com.xmpp.Chat.util.BaseHttpClient;
 import com.xmpp.Chat.util.Constants;
 import com.xmpp.Chat.util.LogHelper;
 import com.xmpp.Chat.util.XmppConnection;
 import com.xmpp.Chat.view.TitleBarView;
-
 import org.json.JSONObject;
 
 public class RegisterActivity extends Activity {
@@ -96,9 +94,9 @@ public class RegisterActivity extends Activity {
                         try{
                             //连接后台服务器
                             JSONObject json_register=new JSONObject();
-                            json_register.put("nickName",account);
-                            json_register.put("sex",sex);
-                            json_register.put("password",psw);
+                            json_register.put("nickName","丁健君12");
+                            json_register.put("sex","男");
+                            json_register.put("password","123456");
                             String resultBody = BaseHttpClient.post(Constants.REGISTERHOST,json_register);
                             JSONObject resultObject = new JSONObject(resultBody);
 

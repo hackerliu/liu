@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
 import com.xmpp.Chat.Entity.MsgInfo;
 import com.xmpp.Chat.db.ChatDBOpenHelper;
 import com.xmpp.Chat.db.ChatDatabaseHelper;
@@ -14,7 +13,7 @@ import com.xmpp.Chat.util.LogHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MsgInfoDao implements IDataDao<MsgInfo> {
+public class MsgInfoDao{
 
     SQLiteDatabase db=null;
     ChatDBOpenHelper dbHelper=null;
@@ -26,7 +25,6 @@ public class MsgInfoDao implements IDataDao<MsgInfo> {
         this.context=context;
     }
 
-    @Override
     public void insert(ContentValues contentValues) {
         try {
             dbHelper=new ChatDBOpenHelper(context);
@@ -40,14 +38,12 @@ public class MsgInfoDao implements IDataDao<MsgInfo> {
         }
     }
 
-    @Override
     public void delete(String ID) {
         String sql="delete from "+tablename+"where userid="+ID;
 
         execDataBase(sql);
     }
 
-    @Override
     public void update(ContentValues contentValues, String ID) {
         try {
             dbHelper=new ChatDBOpenHelper(context);
@@ -61,18 +57,17 @@ public class MsgInfoDao implements IDataDao<MsgInfo> {
         }
     }
 
-    @Override
-    public MsgInfo select(String ID) {
+    public MsgInfo select(int ID) {
         MsgInfo msg=new MsgInfo();
         Cursor cursor=null;
         try {
             dbHelper=new ChatDBOpenHelper(context);
             db= dbHelper.getWritableDatabase();
-            cursor=db.query(tablename,new String[]{"userid"},"userid=?",new String[]{ID},null,null,null);
+            cursor=db.query(tablename,new String[]{"id"},"id=?",new String[]{String.valueOf(ID)},null,null,null);
             if(cursor.moveToNext()){
+                msg.setId(ID);
                 msg.setUserid(cursor.getString(cursor.getColumnIndex("userid")));
                 msg.setMsg(cursor.getString(cursor.getColumnIndex("msg")));
-                msg.setType(cursor.getString(cursor.getColumnIndex("type")));
                 msg.setType(cursor.getString(cursor.getColumnIndex("type")));
                 String time=cursor.getString(cursor.getColumnIndex("time"));
                 msg.setTime(FormatTools.StringToSqlDate(time));
@@ -86,18 +81,21 @@ public class MsgInfoDao implements IDataDao<MsgInfo> {
         return msg;
     }
 
-    @Override
-    public List<MsgInfo> select() {
-        String[] columns={"userid","msg","type","time"};
+    /*
+        use userid to select data
+     */
+    public List<MsgInfo> select(String userid,String limitStart,String limitEnd,String order) {
         List<MsgInfo> msglist=new ArrayList<MsgInfo>();
         MsgInfo msg=null;
         Cursor cursor=null;
         try {
             dbHelper=new ChatDBOpenHelper(context);
             db= dbHelper.getWritableDatabase();
-            cursor=db.query(tablename,columns,null,null,null,null,null);
+            String sql="select * from ? where userid=? order by time ? limit ? offset ?";
+            cursor=db.rawQuery(sql,new String[]{tablename,userid,order,limitStart,limitEnd});
             if(cursor.moveToNext()){
                 msg=new MsgInfo();
+                msg.setId(cursor.getInt(cursor.getColumnIndex("id")));
                 msg.setUserid(cursor.getString(cursor.getColumnIndex("userid")));
                 msg.setMsg(cursor.getString(cursor.getColumnIndex("msg")));
                 msg.setType(cursor.getString(cursor.getColumnIndex("type")));
@@ -114,7 +112,6 @@ public class MsgInfoDao implements IDataDao<MsgInfo> {
         return msglist;
     }
 
-    @Override
     public List<MsgInfo> select(String[] columns, String[] values) {
         List<MsgInfo> msglist=new ArrayList<MsgInfo>();
         MsgInfo msg=null;
@@ -136,6 +133,7 @@ public class MsgInfoDao implements IDataDao<MsgInfo> {
             cursor=db.rawQuery(sql.toString(),values);
             if(cursor.moveToNext()){
                 msg=new MsgInfo();
+                msg.setId(cursor.getInt(cursor.getColumnIndex("id")));
                 msg.setUserid(cursor.getString(cursor.getColumnIndex("userid")));
                 msg.setMsg(cursor.getString(cursor.getColumnIndex("msg")));
                 msg.setType(cursor.getString(cursor.getColumnIndex("type")));

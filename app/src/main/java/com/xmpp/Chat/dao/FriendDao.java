@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
 import com.xmpp.Chat.Entity.User;
 import com.xmpp.Chat.db.ChatDBOpenHelper;
 import com.xmpp.Chat.db.ChatDatabaseHelper;
@@ -14,7 +13,7 @@ import com.xmpp.Chat.util.LogHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FriendDao implements IDataDao<User> {
+public class FriendDao implements IDataDao<User>{
     SQLiteDatabase db=null;
     ChatDBOpenHelper dbHelper=null;
     Context context;
@@ -31,6 +30,19 @@ public class FriendDao implements IDataDao<User> {
             dbHelper=new ChatDBOpenHelper(context);
             db= dbHelper.getWritableDatabase();
             db.insert(tablename, null, contentValues);
+        }catch (Exception e){
+            LogHelper.getInstance().writeLog(FriendDao.class,e.getMessage());
+            e.printStackTrace();
+        }finally {
+            ChatDatabaseHelper.getInstance().closeDB(db,dbHelper);
+        }
+    }
+
+    public void insertOrUpdate(ContentValues contentValues){
+        try {
+            dbHelper=new ChatDBOpenHelper(context);
+            db= dbHelper.getWritableDatabase();
+            db.insertWithOnConflict(tablename,null,contentValues,SQLiteDatabase.CONFLICT_REPLACE);
         }catch (Exception e){
             LogHelper.getInstance().writeLog(FriendDao.class,e.getMessage());
             e.printStackTrace();

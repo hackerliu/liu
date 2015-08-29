@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
 import com.xmpp.Chat.Entity.User;
 import com.xmpp.Chat.db.ChatDBOpenHelper;
 import com.xmpp.Chat.db.ChatDatabaseHelper;

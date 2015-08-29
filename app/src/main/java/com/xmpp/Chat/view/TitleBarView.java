@@ -7,12 +7,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
+import android.widget.*;
 import com.xmpp.Chat.R;
 import com.xmpp.Chat.util.FormatTools;
 
@@ -73,7 +68,7 @@ public class TitleBarView extends RelativeLayout {
 	
 	public void setBtnRight(int icon){
 		Drawable img=mContext.getResources().getDrawable(icon);
-		int height= FormatTools.dip2px(mContext, 30);
+		int height=FormatTools.dip2px(mContext, 30);
 		int width=img.getIntrinsicWidth()*height/img.getIntrinsicHeight();
 		img.setBounds(0, 0, width, height);
 		btnRight.setCompoundDrawables(img, null, null, null);

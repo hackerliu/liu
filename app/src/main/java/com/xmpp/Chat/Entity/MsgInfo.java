@@ -4,10 +4,19 @@ import java.sql.Date;
 
 public class MsgInfo {
 
+    public int id;
     public String userid;
     public String msg;
     public String type;         //0:tome    1:tohim
     public Date time;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getMsg() {
         return msg;

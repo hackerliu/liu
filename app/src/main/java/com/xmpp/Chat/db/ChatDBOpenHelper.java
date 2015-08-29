@@ -3,12 +3,11 @@ package com.xmpp.Chat.db;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
 import com.xmpp.Chat.util.Constants;
 
-public class ChatDBOpenHelper extends SQLiteOpenHelper {
+public class ChatDBOpenHelper extends SQLiteOpenHelper{
 
-    //æ•°æ®åº“ç‰ˆæœ¬
+    //Êı¾İ¿â°æ±¾
     private static final int VERSION = 1;
 
     public ChatDBOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {

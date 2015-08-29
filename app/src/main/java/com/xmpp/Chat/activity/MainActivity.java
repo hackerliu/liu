@@ -5,19 +5,11 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.PopupWindow;
-import android.widget.RadioGroup;
-import android.widget.TabHost;
-import android.widget.TextView;
-
+import android.view.*;
+import android.widget.*;
 import com.xmpp.Chat.R;
 import com.xmpp.Chat.db.ChatDatabaseHelper;
+import com.xmpp.Chat.util.Constants;
 
 public class MainActivity extends TabActivity {
 
@@ -25,7 +17,6 @@ public class MainActivity extends TabActivity {
     private PopupWindow mPopupWindow;
     private View mPopView;
     private FrameLayout buttomBarGroup;
-    private String userID;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,7 +24,6 @@ public class MainActivity extends TabActivity {
         setContentView(R.layout.main);
 
         Intent intent=getIntent();
-        userID = intent.getStringExtra("userID");
         initView();
         creatTable();
         refresh();
@@ -115,7 +105,7 @@ public class MainActivity extends TabActivity {
     }
 
     private void creatTable(){
-        ChatDatabaseHelper.getInstance().createTable(this,userID);
+        ChatDatabaseHelper.getInstance().createTable(this,Constants.curUser.getUserid());
     }
 
     private void refresh(){
@@ -123,7 +113,7 @@ public class MainActivity extends TabActivity {
     }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode== KeyEvent.KEYCODE_MENU||keyCode== KeyEvent.KEYCODE_BACK){
+        if(keyCode==KeyEvent.KEYCODE_MENU||keyCode==KeyEvent.KEYCODE_BACK){
             mPopupWindow.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#b0000000")));
             mPopupWindow.showAtLocation(buttomBarGroup, Gravity.BOTTOM, 0, 0);
             mPopupWindow.setAnimationStyle(R.style.app_pop);

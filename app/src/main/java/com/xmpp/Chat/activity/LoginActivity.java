@@ -12,18 +12,16 @@ import android.os.Message;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
-
+import android.widget.*;
+import com.xmpp.Chat.Entity.User;
 import com.xmpp.Chat.R;
+import com.xmpp.Chat.util.Constants;
 import com.xmpp.Chat.util.ImgTools;
 import com.xmpp.Chat.util.LogHelper;
+import com.xmpp.Chat.util.XmppConnection;
 import com.xmpp.Chat.view.TextURLView;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends Activity{
 
     private Context mContext;
     private ImageView headImg;
@@ -44,12 +42,11 @@ public class LoginActivity extends Activity {
             switch (msg.what) {
                 case SUCCESS:
                     Intent intent=new Intent(mContext,MainActivity.class);
-                    intent.putExtra("userID",msg.obj.toString());
                     startActivity(intent);
                     finish();
                     break;
                 case  FAILURE:
-                    Toast.makeText(mContext, getString(R.string.login_fail), Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext,getString(R.string.login_fail),Toast.LENGTH_LONG).show();
                     break;
             }
             super.handleMessage(msg);
@@ -82,7 +79,7 @@ public class LoginActivity extends Activity {
         rl_user.startAnimation(anim);
         try{
             Resources res = getResources();
-            Bitmap bitmap = BitmapFactory.decodeResource(res, R.drawable.lufei);
+            Bitmap bitmap = BitmapFactory.decodeResource(res,R.drawable.lufei);
             Bitmap bitmap1=ImgTools.toRoundBitmap(bitmap);
             headImg.setImageBitmap(bitmap1);
         }catch(Exception e){
@@ -103,24 +100,24 @@ public class LoginActivity extends Activity {
             final String account=account_et.getText().toString().trim();
             final String psw=psw_et.getText().toString().trim();
             if(account.equals("")){
-                Toast.makeText(LoginActivity.this, "please input your account/ChatNumber", Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this,"please input your account/ChatNumber",Toast.LENGTH_LONG).show();
                 return;
             }
             if(psw.equals("")){
-                Toast.makeText(LoginActivity.this, "please input your password", Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this,"please input your password",Toast.LENGTH_LONG).show();
                 return;
             }
 
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    //boolean isSuc=XmppConnection.getInstance().login(account,psw);
-                    boolean isSuc=true;
+                    boolean isSuc= XmppConnection.getInstance().login(account,psw);
                     if(isSuc){
-                        Message msg=handler.obtainMessage(SUCCESS);
-                        msg.what=SUCCESS;
-                        msg.obj=account;
-                        handler.sendMessage(msg);
+                        handler.sendEmptyMessage(1);
+                        User user=new User();
+                        user.setUserid(account);
+                        user.setPsw(psw);
+                        Constants.setCurUser(user);
                     }else{
                         handler.sendEmptyMessage(0);
                     }

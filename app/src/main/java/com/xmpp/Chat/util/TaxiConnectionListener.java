@@ -1,7 +1,6 @@
 package com.xmpp.Chat.util;
 
 import android.util.Log;
-
 import org.jivesoftware.smack.ConnectionListener;
 
 import java.util.Timer;
