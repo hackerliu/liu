@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.squareup.picasso.Picasso;
+import com.xmpp.Chat.R;
 import com.xmpp.Chat.activity.ChatWithFriendActivity;
 
 import java.util.List;

@@ -39,7 +39,7 @@ public class XmppConnection {
     private TaxiConnectionListener connectionListener;
 
     /**
-     * µ¥ÀıÄ£Ê½
+     * å•ä¾‹æ¨¡å¼
      */
     private XmppConnection(){
 
@@ -57,7 +57,7 @@ public class XmppConnection {
     }
 
     /**
-     * ´´½¨Á¬½Ó
+     * åˆ›å»ºè¿æ¥
      */
     public XMPPConnection getConnection() {
         if (connection == null) {
@@ -67,27 +67,27 @@ public class XmppConnection {
     }
 
     /**
-     * ´ò¿ªÁ¬½Ó
+     * æ‰“å¼€è¿æ¥
      */
     public boolean openConnection() {
         try {
             if (null == connection || !connection.isAuthenticated()) {
-                XMPPConnection.DEBUG_ENABLED = true;// ¿ªÆôDEBUGÄ£Ê½
-                // ÅäÖÃÁ¬½Ó
+                XMPPConnection.DEBUG_ENABLED = true;// å¼€å¯DEBUGæ¨¡å¼
+                // é…ç½®è¿æ¥
                 ConnectionConfiguration config = new ConnectionConfiguration(
                         SERVER_HOST, SERVER_PORT, SERVER_NAME);
                 config.setReconnectionAllowed(true);
                 config.setSecurityMode(ConnectionConfiguration.SecurityMode.disabled);
-                config.setSendPresence(true); // ×´Ì¬ÉèÎªÀëÏß£¬Ä¿µÄÎªÁËÈ¡ÀëÏßÏûÏ¢
-                config.setSASLAuthenticationEnabled(false); // ÊÇ·ñÆôÓÃ°²È«ÑéÖ¤
+                config.setSendPresence(true); // çŠ¶æ€è®¾ä¸ºç¦»çº¿ï¼Œç›®çš„ä¸ºäº†å–ç¦»çº¿æ¶ˆæ¯
+                config.setSASLAuthenticationEnabled(false); // æ˜¯å¦å¯ç”¨å®‰å…¨éªŒè¯
                 config.setTruststorePath("/system/etc/security/cacerts.bks");
                 config.setTruststorePassword("changeit");
                 config.setTruststoreType("bks");
                 connection = new XMPPConnection(config);
                 Log.i("CONNECTION","before");
-                connection.connect();// Á¬½Óµ½·şÎñÆ÷
+                connection.connect();// è¿æ¥åˆ°æœåŠ¡å™¨
                 Log.i("CONNECTION", "after");
-                // ÅäÖÃ¸÷ÖÖProvider£¬Èç¹û²»ÅäÖÃ£¬Ôò»áÎŞ·¨½âÎöÊı¾İ
+                // é…ç½®å„ç§Providerï¼Œå¦‚æœä¸é…ç½®ï¼Œåˆ™ä¼šæ— æ³•è§£ææ•°æ®
                 configureConnection(ProviderManager.getInstance());
                 return true;
             }
@@ -99,24 +99,24 @@ public class XmppConnection {
     }
 
     /**
-     * ¹Ø±ÕÁ¬½Ó
+     * å…³é—­è¿æ¥
      */
     public void closeConnection() {
         if (connection != null) {
-            //ÒÆ³ıÁ¬½Ó¼àÌı
+            //ç§»é™¤è¿æ¥ç›‘å¬
             //connection.removeConnectionListener(connectionListener);
             if (connection.isConnected())
                 connection.disconnect();
             connection = null;
         }
-        Log.i("XmppConnection", "¹Ø±Õ¼àÌı");
+        Log.i("XmppConnection", "å…³é—­ç›‘å¬");
     }
 
     /**
-     * µÇÂ¼
+     * ç™»å½•
      *
-     * @param account  µÇÂ¼ÕÊºÅ
-     * @param password µÇÂ¼ÃÜÂë
+     * @param account  ç™»å½•å¸å·
+     * @param password ç™»å½•å¯†ç 
      * @return
      */
     public boolean login(String account, String password) {
@@ -124,10 +124,10 @@ public class XmppConnection {
             if (getConnection() == null)
                 return false;
             getConnection().login(account, password);
-            // ¸ü¸ÄÔÚ¾Q î‘B
+            // æ›´æ”¹åœ¨ç¶«ç‹€æ…‹
             Presence presence = new Presence(Presence.Type.available);
             getConnection().sendPacket(presence);
-            // Ìí¼ÓßB½Ó±OÂ 
+            // æ·»åŠ é€£æ¥ç›£è½
             connectionListener = new TaxiConnectionListener();
             getConnection().addConnectionListener(connectionListener);
             return true;
@@ -138,11 +138,11 @@ public class XmppConnection {
     }
 
     /**
-     * ×¢²á
+     * æ³¨å†Œ
      *
-     * @param account  ×¢²áÕÊºÅ
-     * @param password ×¢²áÃÜÂë
-     * @return 1¡¢×¢²á³É¹¦ 0¡¢·şÎñÆ÷Ã»ÓĞ·µ»Ø½á¹û2¡¢Õâ¸öÕËºÅÒÑ¾­´æÔÚ3¡¢×¢²áÊ§°Ü
+     * @param account  æ³¨å†Œå¸å·
+     * @param password æ³¨å†Œå¯†ç 
+     * @return 1ã€æ³¨å†ŒæˆåŠŸ 0ã€æœåŠ¡å™¨æ²¡æœ‰è¿”å›ç»“æœ2ã€è¿™ä¸ªè´¦å·å·²ç»å­˜åœ¨3ã€æ³¨å†Œå¤±è´¥
      */
     public String regist(String account, String password) {
         if (getConnection() == null)
@@ -150,10 +150,10 @@ public class XmppConnection {
         Registration reg = new Registration();
         reg.setType(IQ.Type.SET);
         reg.setTo(getConnection().getServiceName());
-        // ×¢ÒâÕâÀïcreateAccount×¢²áÊ±£¬²ÎÊıÊÇUserName£¬²»ÊÇjid£¬ÊÇ"@"Ç°ÃæµÄ²¿·Ö¡£
+        // æ³¨æ„è¿™é‡ŒcreateAccountæ³¨å†Œæ—¶ï¼Œå‚æ•°æ˜¯UserNameï¼Œä¸æ˜¯jidï¼Œæ˜¯"@"å‰é¢çš„éƒ¨åˆ†ã€‚
         reg.setUsername(account);
         reg.setPassword(password);
-        // Õâ±ßaddAttribute²»ÄÜÎª¿Õ£¬·ñÔò³ö´í¡£ËùÒÔ×ö¸ö±êÖ¾ÊÇandroidÊÖ»ú´´½¨µÄ°É£¡£¡£¡£¡£¡
+        // è¿™è¾¹addAttributeä¸èƒ½ä¸ºç©ºï¼Œå¦åˆ™å‡ºé”™ã€‚æ‰€ä»¥åšä¸ªæ ‡å¿—æ˜¯androidæ‰‹æœºåˆ›å»ºçš„å§ï¼ï¼ï¼ï¼ï¼
         reg.addAttribute("android", "geolo_createUser_android");
         PacketFilter filter = new AndFilter(new PacketIDFilter(
                 reg.getPacketID()), new PacketTypeFilter(IQ.class));
@@ -162,7 +162,7 @@ public class XmppConnection {
         getConnection().sendPacket(reg);
         IQ result = (IQ) collector.nextResult(SmackConfiguration
                 .getPacketReplyTimeout());
-        // Stop queuing resultsÍ£Ö¹ÇëÇóresults£¨ÊÇ·ñ³É¹¦µÄ½á¹û£©
+        // Stop queuing resultsåœæ­¢è¯·æ±‚resultsï¼ˆæ˜¯å¦æˆåŠŸçš„ç»“æœï¼‰
         collector.cancel();
         if (result == null) {
             Log.e("regist", "No response from server.");
@@ -184,7 +184,7 @@ public class XmppConnection {
     }
 
     /**
-     * ¸ü¸ÄÓÃ»§×´Ì¬
+     * æ›´æ”¹ç”¨æˆ·çŠ¶æ€
      */
     public void setPresence(int code) {
         XMPPConnection con = getConnection();
@@ -195,25 +195,25 @@ public class XmppConnection {
             case 0:
                 presence = new Presence(Presence.Type.available);
                 con.sendPacket(presence);
-                Log.v("state", "ÉèÖÃÔÚÏß");
+                Log.v("state", "è®¾ç½®åœ¨çº¿");
                 break;
             case 1:
                 presence = new Presence(Presence.Type.available);
                 presence.setMode(Presence.Mode.chat);
                 con.sendPacket(presence);
-                Log.v("state", "ÉèÖÃQÎÒ°É");
+                Log.v("state", "è®¾ç½®Qæˆ‘å§");
                 break;
             case 2:
                 presence = new Presence(Presence.Type.available);
                 presence.setMode(Presence.Mode.dnd);
                 con.sendPacket(presence);
-                Log.v("state", "ÉèÖÃÃ¦Âµ");
+                Log.v("state", "è®¾ç½®å¿™ç¢Œ");
                 break;
             case 3:
                 presence = new Presence(Presence.Type.available);
                 presence.setMode(Presence.Mode.away);
                 con.sendPacket(presence);
-                Log.v("state", "ÉèÖÃÀë¿ª");
+                Log.v("state", "è®¾ç½®ç¦»å¼€");
                 break;
             case 4:
                 Roster roster = con.getRoster();
@@ -226,18 +226,18 @@ public class XmppConnection {
                     con.sendPacket(presence);
                     Log.v("state", presence.toXML());
                 }
-                // ÏòÍ¬Ò»ÓÃ»§µÄÆäËû¿Í»§¶Ë·¢ËÍÒşÉí×´Ì¬
+                // å‘åŒä¸€ç”¨æˆ·çš„å…¶ä»–å®¢æˆ·ç«¯å‘é€éšèº«çŠ¶æ€
                 presence = new Presence(Presence.Type.unavailable);
                 presence.setPacketID(Packet.ID_NOT_AVAILABLE);
                 presence.setFrom(con.getUser());
                 presence.setTo(StringUtils.parseBareAddress(con.getUser()));
                 con.sendPacket(presence);
-                Log.v("state", "ÉèÖÃÒşÉí");
+                Log.v("state", "è®¾ç½®éšèº«");
                 break;
             case 5:
                 presence = new Presence(Presence.Type.unavailable);
                 con.sendPacket(presence);
-                Log.v("state", "ÉèÖÃÀëÏß");
+                Log.v("state", "è®¾ç½®ç¦»çº¿");
                 break;
             default:
                 break;
@@ -245,9 +245,9 @@ public class XmppConnection {
     }
 
     /**
-     * »ñÈ¡ËùÓĞ×é
+     * è·å–æ‰€æœ‰ç»„
      *
-     * @return ËùÓĞ×é¼¯ºÏ
+     * @return æ‰€æœ‰ç»„é›†åˆ
      */
     public List<RosterGroup> getGroups() {
         if (getConnection() == null)
@@ -263,9 +263,9 @@ public class XmppConnection {
     }
 
     /**
-     * »ñÈ¡Ä³¸ö×éÀïÃæµÄËùÓĞºÃÓÑ
+     * è·å–æŸä¸ªç»„é‡Œé¢çš„æ‰€æœ‰å¥½å‹
      *
-     * @param groupName ×éÃû
+     * @param groupName ç»„å
      * @return
      */
     public List<RosterEntry> getEntriesByGroup(String groupName) {
@@ -283,7 +283,7 @@ public class XmppConnection {
     }
 
     /**
-     * »ñÈ¡ËùÓĞºÃÓÑĞÅÏ¢
+     * è·å–æ‰€æœ‰å¥½å‹ä¿¡æ¯
      *
      * @return
      */
@@ -301,7 +301,7 @@ public class XmppConnection {
     }
 
     /**
-     * »ñÈ¡ÓÃ»§VCardĞÅÏ¢
+     * è·å–ç”¨æˆ·VCardä¿¡æ¯
      *
      * @param user
      * @return
@@ -320,7 +320,7 @@ public class XmppConnection {
     }
 
     /**
-     * »ñÈ¡ÓÃ»§Í·ÏñĞÅÏ¢
+     * è·å–ç”¨æˆ·å¤´åƒä¿¡æ¯
      *
      * @param user
      * @return
@@ -331,7 +331,7 @@ public class XmppConnection {
         ByteArrayInputStream bais = null;
         try {
             VCard vcard = new VCard();
-            // ¼ÓÈëÕâ¾ä´úÂë£¬½â¾öNo VCard for
+            // åŠ å…¥è¿™å¥ä»£ç ï¼Œè§£å†³No VCard for
             ProviderManager.getInstance().addIQProvider("vCard", "vcard-temp",
                     new org.jivesoftware.smackx.provider.VCardProvider());
             if (user == "" || user == null || user.trim().length() <= 0) {
@@ -351,7 +351,7 @@ public class XmppConnection {
     }
 
     /**
-     * Ìí¼ÓÒ»¸ö·Ö×é
+     * æ·»åŠ ä¸€ä¸ªåˆ†ç»„
      *
      * @param groupName
      * @return
@@ -361,7 +361,7 @@ public class XmppConnection {
             return false;
         try {
             getConnection().getRoster().createGroup(groupName);
-            Log.v("addGroup", groupName + "„“½¨³É¹¦");
+            Log.v("addGroup", groupName + "å‰µå»ºæˆåŠŸ");
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -370,7 +370,7 @@ public class XmppConnection {
     }
 
     /**
-     * É¾³ı·Ö×é
+     * åˆ é™¤åˆ†ç»„
      *
      * @param groupName
      * @return
@@ -380,7 +380,7 @@ public class XmppConnection {
     }
 
     /**
-     * Ìí¼ÓºÃÓÑ ÎŞ·Ö×é
+     * æ·»åŠ å¥½å‹ æ— åˆ†ç»„
      *
      * @param userName
      * @param name
@@ -399,7 +399,7 @@ public class XmppConnection {
     }
 
     /**
-     * Ìí¼ÓºÃÓÑ ÓĞ·Ö×é
+     * æ·»åŠ å¥½å‹ æœ‰åˆ†ç»„
      *
      * @param userName
      * @param name
@@ -424,7 +424,7 @@ public class XmppConnection {
     }
 
     /**
-     * É¾³ıºÃÓÑ
+     * åˆ é™¤å¥½å‹
      *
      * @param userName
      * @return
@@ -451,7 +451,7 @@ public class XmppConnection {
     }
 
     /**
-     * ²éÑ¯ÓÃ»§
+     * æŸ¥è¯¢ç”¨æˆ·
      *
      * @param userName
      * @return
@@ -485,7 +485,7 @@ public class XmppConnection {
                 user.put("userPhote", row.getValues("userPhote").next()
                         .toString());
                 results.add(user);
-                // Èô´æÔÚ£¬ÔòÓĞ·µ»Ø,UserNameÒ»¶¨·Ç¿Õ£¬ÆäËûÁ½¸öÈôÊÇÓĞÉè£¬Ò»¶¨·Ç¿Õ
+                // è‹¥å­˜åœ¨ï¼Œåˆ™æœ‰è¿”å›,UserNameä¸€å®šéç©ºï¼Œå…¶ä»–ä¸¤ä¸ªè‹¥æ˜¯æœ‰è®¾ï¼Œä¸€å®šéç©º
             }
         } catch (XMPPException e) {
             e.printStackTrace();
@@ -494,7 +494,7 @@ public class XmppConnection {
     }
 
     /**
-     * ĞŞ¸ÄĞÄÇé
+     * ä¿®æ”¹å¿ƒæƒ…
      *
      * @param status
      */
@@ -507,7 +507,7 @@ public class XmppConnection {
     }
 
     /**
-     * ĞŞ¸ÄÓÃ»§Í·Ïñ
+     * ä¿®æ”¹ç”¨æˆ·å¤´åƒ
      *
      * @param file
      */
@@ -540,7 +540,7 @@ public class XmppConnection {
     }
 
     /**
-     * ÎÄ¼ş×ª×Ö½Ú
+     * æ–‡ä»¶è½¬å­—èŠ‚
      *
      * @param file
      * @return
@@ -565,7 +565,7 @@ public class XmppConnection {
     }
 
     /**
-     * É¾³ıµ±Ç°ÓÃ»§
+     * åˆ é™¤å½“å‰ç”¨æˆ·
      *
      * @return
      */
@@ -581,7 +581,7 @@ public class XmppConnection {
     }
 
     /**
-     * ĞŞ¸ÄÃÜÂë
+     * ä¿®æ”¹å¯†ç 
      *
      * @return
      */
@@ -597,7 +597,7 @@ public class XmppConnection {
     }
 
     /**
-     * ³õÊ¼»¯»áÒéÊÒÁĞ±í
+     * åˆå§‹åŒ–ä¼šè®®å®¤åˆ—è¡¨
      */
     public List<HostedRoom> getHostRooms() {
         if (getConnection() == null)
@@ -611,9 +611,9 @@ public class XmppConnection {
             for (HostedRoom entry : hostrooms) {
                 roominfos.add(entry);
                 Log.i("room",
-                        "Ãû×Ö£º" + entry.getName() + " - ID:" + entry.getJid());
+                        "åå­—ï¼š" + entry.getName() + " - ID:" + entry.getJid());
             }
-            Log.i("room", "·şÎñ»áÒéÊıÁ¿:" + roominfos.size());
+            Log.i("room", "æœåŠ¡ä¼šè®®æ•°é‡:" + roominfos.size());
         } catch (XMPPException e) {
             e.printStackTrace();
         }
@@ -621,9 +621,9 @@ public class XmppConnection {
     }
 
     /**
-     * ´´½¨·¿¼ä
+     * åˆ›å»ºæˆ¿é—´
      *
-     * @param roomName ·¿¼äÃû³Æ
+     * @param roomName æˆ¿é—´åç§°
      */
     public MultiUserChat createRoom(String user, String roomName,
                                     String password) {
@@ -632,53 +632,53 @@ public class XmppConnection {
 
         MultiUserChat muc = null;
         try {
-            // ´´½¨Ò»¸öMultiUserChat
+            // åˆ›å»ºä¸€ä¸ªMultiUserChat
             muc = new MultiUserChat(getConnection(), roomName + "@conference."
                     + getConnection().getServiceName());
-            // ´´½¨ÁÄÌìÊÒ
+            // åˆ›å»ºèŠå¤©å®¤
             muc.create(roomName);
-            // »ñµÃÁÄÌìÊÒµÄÅäÖÃ±íµ¥
+            // è·å¾—èŠå¤©å®¤çš„é…ç½®è¡¨å•
             Form form = muc.getConfigurationForm();
-            // ¸ù¾İÔ­Ê¼±íµ¥´´½¨Ò»¸öÒªÌá½»µÄĞÂ±íµ¥¡£
+            // æ ¹æ®åŸå§‹è¡¨å•åˆ›å»ºä¸€ä¸ªè¦æäº¤çš„æ–°è¡¨å•ã€‚
             Form submitForm = form.createAnswerForm();
-            // ÏòÒªÌá½»µÄ±íµ¥Ìí¼ÓÄ¬ÈÏ´ğ¸´
+            // å‘è¦æäº¤çš„è¡¨å•æ·»åŠ é»˜è®¤ç­”å¤
             for (Iterator<FormField> fields = form.getFields(); fields
                     .hasNext(); ) {
                 FormField field = (FormField) fields.next();
                 if (!FormField.TYPE_HIDDEN.equals(field.getType())
                         && field.getVariable() != null) {
-                    // ÉèÖÃÄ¬ÈÏÖµ×÷Îª´ğ¸´
+                    // è®¾ç½®é»˜è®¤å€¼ä½œä¸ºç­”å¤
                     submitForm.setDefaultAnswer(field.getVariable());
                 }
             }
-            // ÉèÖÃÁÄÌìÊÒµÄĞÂÓµÓĞÕß
+            // è®¾ç½®èŠå¤©å®¤çš„æ–°æ‹¥æœ‰è€…
             List<String> owners = new ArrayList<String>();
-            owners.add(getConnection().getUser());// ÓÃ»§JID
+            owners.add(getConnection().getUser());// ç”¨æˆ·JID
             submitForm.setAnswer("muc#roomconfig_roomowners", owners);
-            // ÉèÖÃÁÄÌìÊÒÊÇ³Ö¾ÃÁÄÌìÊÒ£¬¼´½«Òª±»±£´æÏÂÀ´
+            // è®¾ç½®èŠå¤©å®¤æ˜¯æŒä¹…èŠå¤©å®¤ï¼Œå³å°†è¦è¢«ä¿å­˜ä¸‹æ¥
             submitForm.setAnswer("muc#roomconfig_persistentroom", true);
-            // ·¿¼ä½ö¶Ô³ÉÔ±¿ª·Å
+            // æˆ¿é—´ä»…å¯¹æˆå‘˜å¼€æ”¾
             submitForm.setAnswer("muc#roomconfig_membersonly", false);
-            // ÔÊĞíÕ¼ÓĞÕßÑûÇëÆäËûÈË
+            // å…è®¸å æœ‰è€…é‚€è¯·å…¶ä»–äºº
             submitForm.setAnswer("muc#roomconfig_allowinvites", true);
             if (!password.equals("")) {
-                // ½øÈëÊÇ·ñĞèÒªÃÜÂë
+                // è¿›å…¥æ˜¯å¦éœ€è¦å¯†ç 
                 submitForm.setAnswer("muc#roomconfig_passwordprotectedroom",
                         true);
-                // ÉèÖÃ½øÈëÃÜÂë
+                // è®¾ç½®è¿›å…¥å¯†ç 
                 submitForm.setAnswer("muc#roomconfig_roomsecret", password);
             }
-            // ÄÜ¹»·¢ÏÖÕ¼ÓĞÕßÕæÊµ JID µÄ½ÇÉ«
+            // èƒ½å¤Ÿå‘ç°å æœ‰è€…çœŸå® JID çš„è§’è‰²
             // submitForm.setAnswer("muc#roomconfig_whois", "anyone");
-            // µÇÂ¼·¿¼ä¶Ô»°
+            // ç™»å½•æˆ¿é—´å¯¹è¯
             submitForm.setAnswer("muc#roomconfig_enablelogging", true);
-            // ½öÔÊĞí×¢²áµÄêÇ³ÆµÇÂ¼
+            // ä»…å…è®¸æ³¨å†Œçš„æ˜µç§°ç™»å½•
             submitForm.setAnswer("x-muc#roomconfig_reservednick", true);
-            // ÔÊĞíÊ¹ÓÃÕßĞŞ¸ÄêÇ³Æ
+            // å…è®¸ä½¿ç”¨è€…ä¿®æ”¹æ˜µç§°
             submitForm.setAnswer("x-muc#roomconfig_canchangenick", false);
-            // ÔÊĞíÓÃ»§×¢²á·¿¼ä
+            // å…è®¸ç”¨æˆ·æ³¨å†Œæˆ¿é—´
             submitForm.setAnswer("x-muc#roomconfig_registration", false);
-            // ·¢ËÍÒÑÍê³ÉµÄ±íµ¥£¨ÓĞÄ¬ÈÏÖµ£©µ½·şÎñÆ÷À´ÅäÖÃÁÄÌìÊÒ
+            // å‘é€å·²å®Œæˆçš„è¡¨å•ï¼ˆæœ‰é»˜è®¤å€¼ï¼‰åˆ°æœåŠ¡å™¨æ¥é…ç½®èŠå¤©å®¤
             muc.sendConfigurationForm(submitForm);
         } catch (XMPPException e) {
             e.printStackTrace();
@@ -688,38 +688,38 @@ public class XmppConnection {
     }
 
     /**
-     * ¼ÓÈë»áÒéÊÒ
+     * åŠ å…¥ä¼šè®®å®¤
      *
-     * @param user      êÇ³Æ
-     * @param password  »áÒéÊÒÃÜÂë
-     * @param roomsName »áÒéÊÒÃû
+     * @param user      æ˜µç§°
+     * @param password  ä¼šè®®å®¤å¯†ç 
+     * @param roomsName ä¼šè®®å®¤å
      */
     public MultiUserChat joinMultiUserChat(String user, String roomsName,
                                            String password) {
         if (getConnection() == null)
             return null;
         try {
-            // Ê¹ÓÃXMPPConnection´´½¨Ò»¸öMultiUserChat´°¿Ú
+            // ä½¿ç”¨XMPPConnectionåˆ›å»ºä¸€ä¸ªMultiUserChatçª—å£
             MultiUserChat muc = new MultiUserChat(getConnection(), roomsName
                     + "@conference." + getConnection().getServiceName());
-            // ÁÄÌìÊÒ·şÎñ½«»á¾ö¶¨Òª½ÓÊÜµÄÀúÊ·¼ÇÂ¼ÊıÁ¿
+            // èŠå¤©å®¤æœåŠ¡å°†ä¼šå†³å®šè¦æ¥å—çš„å†å²è®°å½•æ•°é‡
             DiscussionHistory history = new DiscussionHistory();
             history.setMaxChars(0);
             // history.setSince(new Date());
-            // ÓÃ»§¼ÓÈëÁÄÌìÊÒ
+            // ç”¨æˆ·åŠ å…¥èŠå¤©å®¤
             muc.join(user, password, history,
                     SmackConfiguration.getPacketReplyTimeout());
-            Log.i("MultiUserChat", "»áÒéÊÒ¡¾" + roomsName + "¡¿¼ÓÈë³É¹¦........");
+            Log.i("MultiUserChat", "ä¼šè®®å®¤ã€" + roomsName + "ã€‘åŠ å…¥æˆåŠŸ........");
             return muc;
         } catch (XMPPException e) {
             e.printStackTrace();
-            Log.i("MultiUserChat", "»áÒéÊÒ¡¾" + roomsName + "¡¿¼ÓÈëÊ§°Ü........");
+            Log.i("MultiUserChat", "ä¼šè®®å®¤ã€" + roomsName + "ã€‘åŠ å…¥å¤±è´¥........");
             return null;
         }
     }
 
     /**
-     * ²éÑ¯»áÒéÊÒ³ÉÔ±Ãû×Ö
+     * æŸ¥è¯¢ä¼šè®®å®¤æˆå‘˜åå­—
      *
      * @param muc
      */
@@ -728,9 +728,9 @@ public class XmppConnection {
             return null;
         List<String> listUser = new ArrayList<String>();
         Iterator<String> it = muc.getOccupants();
-        // ±éÀú³öÁÄÌìÊÒÈËÔ±Ãû³Æ
+        // éå†å‡ºèŠå¤©å®¤äººå‘˜åç§°
         while (it.hasNext()) {
-            // ÁÄÌìÊÒ³ÉÔ±Ãû×Ö
+            // èŠå¤©å®¤æˆå‘˜åå­—
             String name = StringUtils.parseResource(it.next());
             listUser.add(name);
         }
@@ -738,7 +738,7 @@ public class XmppConnection {
     }
 
     /**
-     * ·¢ËÍÎÄ¼ş
+     * å‘é€æ–‡ä»¶
      *
      * @param user
      * @param filePath
@@ -746,14 +746,14 @@ public class XmppConnection {
     public void sendFile(String user, String filePath) {
         if (getConnection() == null)
             return;
-        // ´´½¨ÎÄ¼ş´«Êä¹ÜÀíÆ÷
+        // åˆ›å»ºæ–‡ä»¶ä¼ è¾“ç®¡ç†å™¨
         FileTransferManager manager = new FileTransferManager(getConnection());
 
-        // ´´½¨Êä³öµÄÎÄ¼ş´«Êä
+        // åˆ›å»ºè¾“å‡ºçš„æ–‡ä»¶ä¼ è¾“
         OutgoingFileTransfer transfer = manager
                 .createOutgoingFileTransfer(user);
 
-        // ·¢ËÍÎÄ¼ş
+        // å‘é€æ–‡ä»¶
         try {
             transfer.sendFile(new File(filePath), "You won't believe this!");
         } catch (XMPPException e) {
@@ -762,7 +762,7 @@ public class XmppConnection {
     }
 
     /**
-     * »ñÈ¡ÀëÏßÏûÏ¢
+     * è·å–ç¦»çº¿æ¶ˆæ¯
      *
      * @return
      */
@@ -807,16 +807,16 @@ public class XmppConnection {
     }
 
     /**
-     * ÅĞ¶ÏOpenFireÓÃ»§µÄ×´Ì¬ strUrl :
-     * url¸ñÊ½ - http://my.openfire.com:9090/plugins/presence
+     * åˆ¤æ–­OpenFireç”¨æˆ·çš„çŠ¶æ€ strUrl :
+     * urlæ ¼å¼ - http://my.openfire.com:9090/plugins/presence
      * /status?jid=user1@SERVER_NAME&type=xml
-     * ·µ»ØÖµ : 0 - ÓÃ»§²»´æÔÚ; 1 - ÓÃ»§ÔÚÏß; 2 - ÓÃ»§ÀëÏß
-     * ËµÃ÷ £º±ØĞëÒªÇó OpenFire¼ÓÔØ presence ²å¼ş£¬Í¬Ê±ÉèÖÃÈÎºÎÈË¶¼¿ÉÒÔ·ÃÎÊ
+     * è¿”å›å€¼ : 0 - ç”¨æˆ·ä¸å­˜åœ¨; 1 - ç”¨æˆ·åœ¨çº¿; 2 - ç”¨æˆ·ç¦»çº¿
+     * è¯´æ˜ ï¼šå¿…é¡»è¦æ±‚ OpenFireåŠ è½½ presence æ’ä»¶ï¼ŒåŒæ—¶è®¾ç½®ä»»ä½•äººéƒ½å¯ä»¥è®¿é—®
      */
     public int IsUserOnLine(String user) {
         String url = "http://" + SERVER_HOST + ":9090/plugins/presence/status?" +
                 "jid=" + user + "@" + SERVER_NAME + "&type=xml";
-        int shOnLineState = 0; // ²»´æÔÚ
+        int shOnLineState = 0; // ä¸å­˜åœ¨
         try {
             URL oUrl = new URL(url);
             URLConnection oConn = oUrl.openConnection();
@@ -846,7 +846,7 @@ public class XmppConnection {
     }
 
     /**
-     * ¼ÓÈëprovidersµÄº¯Êı ASmackÔÚ/META-INFÈ±ÉÙÒ»¸ösmack.providers ÎÄ¼ş
+     * åŠ å…¥providersçš„å‡½æ•° ASmackåœ¨/META-INFç¼ºå°‘ä¸€ä¸ªsmack.providers æ–‡ä»¶
      *
      * @param pm
      */

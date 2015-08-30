@@ -6,9 +6,9 @@ public class Test {
 
     public static void main(String[] args) {
         if(XmppConnection.getInstance().login("admin","123qwe")){
-            System.out.println("µÇÂ½³É¹¦");
+            System.out.println("ç™»é™†æˆåŠŸ");
         }else{
-            System.out.println("µÇÂ½Ê§°Ü");
+            System.out.println("ç™»é™†å¤±è´¥");
         }
     }
 }
