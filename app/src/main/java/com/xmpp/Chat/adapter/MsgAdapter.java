@@ -12,6 +12,7 @@ import com.squareup.picasso.Picasso;
 import com.xmpp.Chat.R;
 import com.xmpp.Chat.activity.ChatWithFriendActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +24,11 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder>{
 
     public MsgAdapter(Context mContext, List<Map<String,String>> chats){
         this.mContext=mContext;
-        this.chats=chats;
+        if(chats == null) {
+            this.chats = new ArrayList<Map<String, String>>();
+        }else {
+            this.chats = chats;
+        }
     }
 
     @Override
@@ -66,7 +71,7 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder>{
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, ChatWithFriendActivity.class);
-                    intent.putExtra("userID", userID);
+                    intent.putExtra("friendName", user_name.getText().toString());
                     mContext.startActivity(intent);
                 }
             });

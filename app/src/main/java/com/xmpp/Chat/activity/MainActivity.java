@@ -105,7 +105,9 @@ public class MainActivity extends TabActivity {
     }
 
     private void creatTable(){
-        ChatDatabaseHelper.getInstance().createTable(this,Constants.curUser.getUserid());
+        if(Constants.curUser!=null) {
+            ChatDatabaseHelper.getInstance().createTable(this, Constants.curUser.getUserid());
+        }
     }
 
     private void refresh(){
@@ -113,7 +115,7 @@ public class MainActivity extends TabActivity {
     }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode==KeyEvent.KEYCODE_MENU||keyCode==KeyEvent.KEYCODE_BACK){
+        if(keyCode==KeyEvent.KEYCODE_MENU || keyCode==KeyEvent.KEYCODE_BACK){
             mPopupWindow.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#b0000000")));
             mPopupWindow.showAtLocation(buttomBarGroup, Gravity.BOTTOM, 0, 0);
             mPopupWindow.setAnimationStyle(R.style.app_pop);

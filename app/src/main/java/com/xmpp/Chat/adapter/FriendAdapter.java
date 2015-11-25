@@ -14,6 +14,7 @@ import com.xmpp.Chat.Entity.User;
 import com.xmpp.Chat.R;
 import com.xmpp.Chat.activity.ChatWithFriendActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +26,11 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
 
     public FriendAdapter(Context mContext, List<User> friends){
         this.mContext=mContext;
-        this.friends=friends;
+        if(friends == null){
+            this.friends=new ArrayList<User>();
+        } else {
+            this.friends = friends;
+        }
     }
 
     @Override

@@ -1,14 +1,24 @@
 package com.xmpp.Chat.test;
 
-import com.xmpp.Chat.util.XmppConnection;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Test {
 
     public static void main(String[] args) {
-        if(XmppConnection.getInstance().login("admin","123qwe")){
-            System.out.println("登陆成功");
-        }else{
-            System.out.println("登陆失败");
+        List<Person> persons=new ArrayList<Person>();
+        for (int i=0;i<10;i++){
+            persons.add(new Person("person"+i,i));
+        }
+    }
+
+    public static class Person{
+        String name;
+        int age;
+
+        public Person(String name,int age){
+            this.name=name;
+            this.age=age;
         }
     }
 }

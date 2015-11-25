@@ -53,7 +53,7 @@ public class ChatDatabaseHelper {
                 "  regtime DATETIME NOT NULL DEFAULT now)";
 
         String createMsgInfoTableSQL="CREATE TABLE if not exists msg_"+userID+" (" +
-                "  id int NOT NULL primary key AUTOINCREMENT," +
+                "  id INTEGER NOT NULL primary key AUTOINCREMENT," +
                 "  userid VARCHAR(10) NOT NULL," +
                 "  msg TEXT," +
                 "  type int(1) check(type in (0,1)) NOT NULL DEFAULT 0," +

@@ -41,6 +41,7 @@ public class LoginActivity extends Activity{
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case SUCCESS:
+                    Toast.makeText(mContext,getString(R.string.login_suc),Toast.LENGTH_LONG).show();
                     Intent intent=new Intent(mContext,MainActivity.class);
                     startActivity(intent);
                     finish();

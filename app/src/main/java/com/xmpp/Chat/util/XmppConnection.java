@@ -32,7 +32,7 @@ import java.util.*;
 public class XmppConnection {
 
     private int SERVER_PORT = 5222;
-    private String SERVER_HOST = "192.168.1.104";
+    private String SERVER_HOST = "192.168.1.105";
     private XMPPConnection connection = null;
     private String SERVER_NAME = "dingo";
     private static XmppConnection xmppConnection = null;

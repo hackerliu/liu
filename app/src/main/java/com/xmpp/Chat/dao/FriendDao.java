@@ -38,19 +38,6 @@ public class FriendDao implements IDataDao<User>{
         }
     }
 
-    public void insertOrUpdate(ContentValues contentValues){
-        try {
-            dbHelper=new ChatDBOpenHelper(context);
-            db= dbHelper.getWritableDatabase();
-            db.insertWithOnConflict(tablename,null,contentValues,SQLiteDatabase.CONFLICT_REPLACE);
-        }catch (Exception e){
-            LogHelper.getInstance().writeLog(FriendDao.class,e.getMessage());
-            e.printStackTrace();
-        }finally {
-            ChatDatabaseHelper.getInstance().closeDB(db,dbHelper);
-        }
-    }
-
     @Override
     public void delete(String ID) {
         String sql="delete from "+tablename+"where userid="+ID;
